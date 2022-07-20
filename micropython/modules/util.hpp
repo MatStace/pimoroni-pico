@@ -14,3 +14,7 @@
 
 #define m_new_class(cls, ...) new(m_new(cls, 1)) cls(__VA_ARGS__)
 #define m_del_class(cls, ptr) ptr->~cls();m_del(cls, ptr, 1)
+
+#ifndef mp_obj_is_exact_type
+#define mp_obj_is_exact_type mp_obj_is_type
+#endif
