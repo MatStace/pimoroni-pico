@@ -14,12 +14,12 @@ extern "C" {
 #include "float.h"
 
 void pimoroni_tuple_or_list(const mp_obj_t &object, mp_obj_t **items, size_t *length) {
-    if(mp_obj_is_type(object, &mp_type_list)) {
+    if(mp_obj_is_exact_type(object, &mp_type_list)) {
         mp_obj_list_t *list = MP_OBJ_TO_PTR2(object, mp_obj_list_t);
         *length = list->len;
         *items = list->items;
     }
-    else if(mp_obj_is_type(object, &mp_type_tuple)) {
+    else if(mp_obj_is_exact_type(object, &mp_type_tuple)) {
         mp_obj_tuple_t *tuple = MP_OBJ_TO_PTR2(object, mp_obj_tuple_t);
         *length = tuple->len;
         *items = tuple->items;
@@ -120,12 +120,12 @@ mp_obj_t Motor_make_new(const mp_obj_type_t *type, size_t n_args, size_t n_kw, c
     // Determine what pair of pins this motor will use
     const mp_obj_t object = args[ARG_pins].u_obj;
     mp_obj_t *items = nullptr;
-    if(mp_obj_is_type(object, &mp_type_list)) {
+    if(mp_obj_is_exact_type(object, &mp_type_list)) {
         mp_obj_list_t *list = MP_OBJ_TO_PTR2(object, mp_obj_list_t);
         pin_count = list->len;
         items = list->items;
     }
-    else if(mp_obj_is_type(object, &mp_type_tuple)) {
+    else if(mp_obj_is_exact_type(object, &mp_type_tuple)) {
         mp_obj_tuple_t *tuple = MP_OBJ_TO_PTR2(object, mp_obj_tuple_t);
         pin_count = tuple->len;
         items = tuple->items;
@@ -618,12 +618,12 @@ mp_obj_t MotorCluster_make_new(const mp_obj_type_t *type, size_t n_args, size_t 
     // Determine what pair of pins this motor will use
     const mp_obj_t object = args[ARG_pins].u_obj;
     mp_obj_t *items = nullptr;
-    if(mp_obj_is_type(object, &mp_type_list)) {
+    if(mp_obj_is_exact_type(object, &mp_type_list)) {
         mp_obj_list_t *list = MP_OBJ_TO_PTR2(object, mp_obj_list_t);
         pair_count = list->len;
         items = list->items;
     }
-    else if(mp_obj_is_type(object, &mp_type_tuple)) {
+    else if(mp_obj_is_exact_type(object, &mp_type_tuple)) {
         mp_obj_tuple_t *tuple = MP_OBJ_TO_PTR2(object, mp_obj_tuple_t);
         pair_count = tuple->len;
         items = tuple->items;
@@ -659,7 +659,7 @@ mp_obj_t MotorCluster_make_new(const mp_obj_type_t *type, size_t n_args, size_t 
             pins = new pin_pair[pair_count];
             for(size_t i = 0; i < pair_count; i++) {
                 mp_obj_t obj = items[i];
-                if(!mp_obj_is_type(obj, &mp_type_tuple)) {
+                if(!mp_obj_is_exact_type(obj, &mp_type_tuple)) {
                     delete[] pins;
                     mp_raise_ValueError("cannot convert item to a pair tuple");
                 }

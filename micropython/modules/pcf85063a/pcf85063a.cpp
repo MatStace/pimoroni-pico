@@ -76,12 +76,12 @@ mp_obj_t PCF85063A_datetime(size_t n_args, const mp_obj_t *args) {
 
         size_t length = 0;
         mp_obj_t *items = nullptr;
-        if(mp_obj_is_type(object, &mp_type_list)) {
+        if(mp_obj_is_exact_type(object, &mp_type_list)) {
             mp_obj_list_t *list = MP_OBJ_TO_PTR2(object, mp_obj_list_t);
             length = list->len;
             items = list->items;
         }
-        else if(mp_obj_is_type(object, &mp_type_tuple)) {
+        else if(mp_obj_is_exact_type(object, &mp_type_tuple)) {
             mp_obj_tuple_t *tuple = MP_OBJ_TO_PTR2(object, mp_obj_tuple_t);
             length = tuple->len;
             items = tuple->items;

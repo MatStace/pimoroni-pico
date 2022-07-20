@@ -288,7 +288,7 @@ mp_obj_t Calibration_pair(size_t n_args, const mp_obj_t *pos_args, mp_map_t *kw_
             Calibration::Pair &pair = self->calibration->pair((uint)index);
 
             const mp_obj_t object = args[ARG_pair].u_obj;
-            if(mp_obj_is_type(object, &mp_type_list)) {
+            if(mp_obj_is_exact_type(object, &mp_type_list)) {
                 mp_obj_list_t *list = MP_OBJ_TO_PTR2(object, mp_obj_list_t);
                 if(list->len == 2) {
                     pair.pulse = mp_obj_get_float(list->items[0]);
@@ -298,7 +298,7 @@ mp_obj_t Calibration_pair(size_t n_args, const mp_obj_t *pos_args, mp_map_t *kw_
                     mp_raise_ValueError("list must contain two numbers");
                 }
             }
-            else if(mp_obj_is_type(object, &mp_type_tuple)) {
+            else if(mp_obj_is_exact_type(object, &mp_type_tuple)) {
                 mp_obj_tuple_t *tuple = MP_OBJ_TO_PTR2(object, mp_obj_tuple_t);
                 if(tuple->len == 2) {
                     pair.pulse = mp_obj_get_float(tuple->items[0]);
@@ -464,7 +464,7 @@ mp_obj_t Calibration_first(size_t n_args, const mp_obj_t *pos_args, mp_map_t *kw
             Calibration::Pair &pair = self->calibration->first();
 
             const mp_obj_t object = args[ARG_pair].u_obj;
-            if(mp_obj_is_type(object, &mp_type_list)) {
+            if(mp_obj_is_exact_type(object, &mp_type_list)) {
                 mp_obj_list_t *list = MP_OBJ_TO_PTR2(object, mp_obj_list_t);
                 if(list->len == 2) {
                     pair.pulse = mp_obj_get_float(list->items[0]);
@@ -474,7 +474,7 @@ mp_obj_t Calibration_first(size_t n_args, const mp_obj_t *pos_args, mp_map_t *kw
                     mp_raise_ValueError("list must contain two numbers");
                 }
             }
-            else if(mp_obj_is_type(object, &mp_type_tuple)) {
+            else if(mp_obj_is_exact_type(object, &mp_type_tuple)) {
                 mp_obj_tuple_t *tuple = MP_OBJ_TO_PTR2(object, mp_obj_tuple_t);
                 if(tuple->len == 2) {
                     pair.pulse = mp_obj_get_float(tuple->items[0]);
@@ -620,7 +620,7 @@ mp_obj_t Calibration_last(size_t n_args, const mp_obj_t *pos_args, mp_map_t *kw_
             Calibration::Pair &pair = self->calibration->last();
 
             const mp_obj_t object = args[ARG_pair].u_obj;
-            if(mp_obj_is_type(object, &mp_type_list)) {
+            if(mp_obj_is_exact_type(object, &mp_type_list)) {
                 mp_obj_list_t *list = MP_OBJ_TO_PTR2(object, mp_obj_list_t);
                 if(list->len == 2) {
                     pair.pulse = mp_obj_get_float(list->items[0]);
@@ -630,7 +630,7 @@ mp_obj_t Calibration_last(size_t n_args, const mp_obj_t *pos_args, mp_map_t *kw_
                     mp_raise_ValueError("list must contain two numbers");
                 }
             }
-            else if(mp_obj_is_type(object, &mp_type_tuple)) {
+            else if(mp_obj_is_exact_type(object, &mp_type_tuple)) {
                 mp_obj_tuple_t *tuple = MP_OBJ_TO_PTR2(object, mp_obj_tuple_t);
                 if(tuple->len == 2) {
                     pair.pulse = mp_obj_get_float(tuple->items[0]);
@@ -879,7 +879,7 @@ mp_obj_t Servo_make_new(const mp_obj_type_t *type, size_t n_args, size_t n_kw, c
             }
             calibration_type = (servo::CalibrationType)type;
         }
-        else if(mp_obj_is_type(calib_object, &Calibration_type)) {
+        else if(mp_obj_is_exact_type(calib_object, &Calibration_type)) {
             calib = (MP_OBJ_TO_PTR2(calib_object, _Calibration_obj_t)->calibration);
         }
         else {
@@ -1181,7 +1181,7 @@ extern mp_obj_t Servo_calibration(size_t n_args, const mp_obj_t *pos_args, mp_ma
         _Servo_obj_t *self = MP_OBJ_TO_PTR2(args[ARG_self].u_obj, _Servo_obj_t);
 
         const mp_obj_t object = args[ARG_calibration].u_obj;
-        if(mp_obj_is_type(object, &Calibration_type)) {
+        if(mp_obj_is_exact_type(object, &Calibration_type)) {
             _Calibration_obj_t *calib = MP_OBJ_TO_PTR2(object, _Calibration_obj_t);
             self->servo->calibration() = *(calib->calibration);
         }
@@ -1272,12 +1272,12 @@ mp_obj_t ServoCluster_make_new(const mp_obj_type_t *type, size_t n_args, size_t 
     }
     else {
         mp_obj_t *items = nullptr;
-        if(mp_obj_is_type(object, &mp_type_list)) {
+        if(mp_obj_is_exact_type(object, &mp_type_list)) {
             mp_obj_list_t *list = MP_OBJ_TO_PTR2(object, mp_obj_list_t);
             pin_count = list->len;
             items = list->items;
         }
-        else if(mp_obj_is_type(object, &mp_type_tuple)) {
+        else if(mp_obj_is_exact_type(object, &mp_type_tuple)) {
             mp_obj_tuple_t *tuple = MP_OBJ_TO_PTR2(object, mp_obj_tuple_t);
             pin_count = tuple->len;
             items = tuple->items;
@@ -1315,7 +1315,7 @@ mp_obj_t ServoCluster_make_new(const mp_obj_type_t *type, size_t n_args, size_t 
             }
             calibration_type = (servo::CalibrationType)mp_obj_get_int(calib_object);
         }
-        else if(mp_obj_is_type(calib_object, &Calibration_type)) {
+        else if(mp_obj_is_exact_type(calib_object, &Calibration_type)) {
             calib = (MP_OBJ_TO_PTR2(calib_object, _Calibration_obj_t)->calibration);
         }
         else {
@@ -1432,12 +1432,12 @@ extern mp_obj_t ServoCluster_enable(size_t n_args, const mp_obj_t *pos_args, mp_
         else {
             size_t length = 0;
              mp_obj_t *items = nullptr;
-            if(mp_obj_is_type(object, &mp_type_list)) {
+            if(mp_obj_is_exact_type(object, &mp_type_list)) {
                 mp_obj_list_t *list = MP_OBJ_TO_PTR2(object, mp_obj_list_t);
                 length = list->len;
                 items = list->items;
             }
-            else if(mp_obj_is_type(object, &mp_type_tuple)) {
+            else if(mp_obj_is_exact_type(object, &mp_type_tuple)) {
                 mp_obj_tuple_t *tuple = MP_OBJ_TO_PTR2(object, mp_obj_tuple_t);
                 length = tuple->len;
                 items = tuple->items;
@@ -1516,12 +1516,12 @@ extern mp_obj_t ServoCluster_disable(size_t n_args, const mp_obj_t *pos_args, mp
         else {
             size_t length = 0;
              mp_obj_t *items = nullptr;
-            if(mp_obj_is_type(object, &mp_type_list)) {
+            if(mp_obj_is_exact_type(object, &mp_type_list)) {
                 mp_obj_list_t *list = MP_OBJ_TO_PTR2(object, mp_obj_list_t);
                 length = list->len;
                 items = list->items;
             }
-            else if(mp_obj_is_type(object, &mp_type_tuple)) {
+            else if(mp_obj_is_exact_type(object, &mp_type_tuple)) {
                 mp_obj_tuple_t *tuple = MP_OBJ_TO_PTR2(object, mp_obj_tuple_t);
                 length = tuple->len;
                 items = tuple->items;
@@ -1651,12 +1651,12 @@ extern mp_obj_t ServoCluster_pulse(size_t n_args, const mp_obj_t *pos_args, mp_m
             else {
                 size_t length = 0;
                 mp_obj_t *items = nullptr;
-                if(mp_obj_is_type(object, &mp_type_list)) {
+                if(mp_obj_is_exact_type(object, &mp_type_list)) {
                     mp_obj_list_t *list = MP_OBJ_TO_PTR2(object, mp_obj_list_t);
                     length = list->len;
                     items = list->items;
                 }
-                else if(mp_obj_is_type(object, &mp_type_tuple)) {
+                else if(mp_obj_is_exact_type(object, &mp_type_tuple)) {
                     mp_obj_tuple_t *tuple = MP_OBJ_TO_PTR2(object, mp_obj_tuple_t);
                     length = tuple->len;
                     items = tuple->items;
@@ -1769,12 +1769,12 @@ extern mp_obj_t ServoCluster_value(size_t n_args, const mp_obj_t *pos_args, mp_m
             else {
                 size_t length = 0;
                 mp_obj_t *items = nullptr;
-                if(mp_obj_is_type(object, &mp_type_list)) {
+                if(mp_obj_is_exact_type(object, &mp_type_list)) {
                     mp_obj_list_t *list = MP_OBJ_TO_PTR2(object, mp_obj_list_t);
                     length = list->len;
                     items = list->items;
                 }
-                else if(mp_obj_is_type(object, &mp_type_tuple)) {
+                else if(mp_obj_is_exact_type(object, &mp_type_tuple)) {
                     mp_obj_tuple_t *tuple = MP_OBJ_TO_PTR2(object, mp_obj_tuple_t);
                     length = tuple->len;
                     items = tuple->items;
@@ -1887,12 +1887,12 @@ extern mp_obj_t ServoCluster_phase(size_t n_args, const mp_obj_t *pos_args, mp_m
             else {
                 size_t length = 0;
                 mp_obj_t *items = nullptr;
-                if(mp_obj_is_type(object, &mp_type_list)) {
+                if(mp_obj_is_exact_type(object, &mp_type_list)) {
                     mp_obj_list_t *list = MP_OBJ_TO_PTR2(object, mp_obj_list_t);
                     length = list->len;
                     items = list->items;
                 }
-                else if(mp_obj_is_type(object, &mp_type_tuple)) {
+                else if(mp_obj_is_exact_type(object, &mp_type_tuple)) {
                     mp_obj_tuple_t *tuple = MP_OBJ_TO_PTR2(object, mp_obj_tuple_t);
                     length = tuple->len;
                     items = tuple->items;
@@ -2091,12 +2091,12 @@ extern mp_obj_t ServoCluster_to_min(size_t n_args, const mp_obj_t *pos_args, mp_
         else {
             size_t length = 0;
             mp_obj_t *items = nullptr;
-            if(mp_obj_is_type(object, &mp_type_list)) {
+            if(mp_obj_is_exact_type(object, &mp_type_list)) {
                 mp_obj_list_t *list = MP_OBJ_TO_PTR2(object, mp_obj_list_t);
                 length = list->len;
                 items = list->items;
             }
-            else if(mp_obj_is_type(object, &mp_type_tuple)) {
+            else if(mp_obj_is_exact_type(object, &mp_type_tuple)) {
                 mp_obj_tuple_t *tuple = MP_OBJ_TO_PTR2(object, mp_obj_tuple_t);
                 length = tuple->len;
                 items = tuple->items;
@@ -2179,12 +2179,12 @@ extern mp_obj_t ServoCluster_to_mid(size_t n_args, const mp_obj_t *pos_args, mp_
         else {
             size_t length = 0;
             mp_obj_t *items = nullptr;
-            if(mp_obj_is_type(object, &mp_type_list)) {
+            if(mp_obj_is_exact_type(object, &mp_type_list)) {
                 mp_obj_list_t *list = MP_OBJ_TO_PTR2(object, mp_obj_list_t);
                 length = list->len;
                 items = list->items;
             }
-            else if(mp_obj_is_type(object, &mp_type_tuple)) {
+            else if(mp_obj_is_exact_type(object, &mp_type_tuple)) {
                 mp_obj_tuple_t *tuple = MP_OBJ_TO_PTR2(object, mp_obj_tuple_t);
                 length = tuple->len;
                 items = tuple->items;
@@ -2267,12 +2267,12 @@ extern mp_obj_t ServoCluster_to_max(size_t n_args, const mp_obj_t *pos_args, mp_
         else {
             size_t length = 0;
             mp_obj_t *items = nullptr;
-            if(mp_obj_is_type(object, &mp_type_list)) {
+            if(mp_obj_is_exact_type(object, &mp_type_list)) {
                 mp_obj_list_t *list = MP_OBJ_TO_PTR2(object, mp_obj_list_t);
                 length = list->len;
                 items = list->items;
             }
-            else if(mp_obj_is_type(object, &mp_type_tuple)) {
+            else if(mp_obj_is_exact_type(object, &mp_type_tuple)) {
                 mp_obj_tuple_t *tuple = MP_OBJ_TO_PTR2(object, mp_obj_tuple_t);
                 length = tuple->len;
                 items = tuple->items;
@@ -2359,12 +2359,12 @@ extern mp_obj_t ServoCluster_to_percent(size_t n_args, const mp_obj_t *pos_args,
             else {
                 size_t length = 0;
                 mp_obj_t *items = nullptr;
-                if(mp_obj_is_type(object, &mp_type_list)) {
+                if(mp_obj_is_exact_type(object, &mp_type_list)) {
                     mp_obj_list_t *list = MP_OBJ_TO_PTR2(object, mp_obj_list_t);
                     length = list->len;
                     items = list->items;
                 }
-                else if(mp_obj_is_type(object, &mp_type_tuple)) {
+                else if(mp_obj_is_exact_type(object, &mp_type_tuple)) {
                     mp_obj_tuple_t *tuple = MP_OBJ_TO_PTR2(object, mp_obj_tuple_t);
                     length = tuple->len;
                     items = tuple->items;
@@ -2431,12 +2431,12 @@ extern mp_obj_t ServoCluster_to_percent(size_t n_args, const mp_obj_t *pos_args,
             else {
                 size_t length = 0;
                 mp_obj_t *items = nullptr;
-                if(mp_obj_is_type(object, &mp_type_list)) {
+                if(mp_obj_is_exact_type(object, &mp_type_list)) {
                     mp_obj_list_t *list = MP_OBJ_TO_PTR2(object, mp_obj_list_t);
                     length = list->len;
                     items = list->items;
                 }
-                else if(mp_obj_is_type(object, &mp_type_tuple)) {
+                else if(mp_obj_is_exact_type(object, &mp_type_tuple)) {
                     mp_obj_tuple_t *tuple = MP_OBJ_TO_PTR2(object, mp_obj_tuple_t);
                     length = tuple->len;
                     items = tuple->items;
@@ -2509,12 +2509,12 @@ extern mp_obj_t ServoCluster_to_percent(size_t n_args, const mp_obj_t *pos_args,
             else {
                 size_t length = 0;
                 mp_obj_t *items = nullptr;
-                if(mp_obj_is_type(object, &mp_type_list)) {
+                if(mp_obj_is_exact_type(object, &mp_type_list)) {
                     mp_obj_list_t *list = MP_OBJ_TO_PTR2(object, mp_obj_list_t);
                     length = list->len;
                     items = list->items;
                 }
-                else if(mp_obj_is_type(object, &mp_type_tuple)) {
+                else if(mp_obj_is_exact_type(object, &mp_type_tuple)) {
                     mp_obj_tuple_t *tuple = MP_OBJ_TO_PTR2(object, mp_obj_tuple_t);
                     length = tuple->len;
                     items = tuple->items;
@@ -2678,7 +2678,7 @@ extern mp_obj_t ServoCluster_calibration(size_t n_args, const mp_obj_t *pos_args
 
         int servo = args[ARG_servo].u_int;
         const mp_obj_t object = args[ARG_calibration].u_obj;
-        if(mp_obj_is_type(object, &Calibration_type)) {
+        if(mp_obj_is_exact_type(object, &Calibration_type)) {
             _Calibration_obj_t *calib = MP_OBJ_TO_PTR2(object, _Calibration_obj_t);
             self->cluster->calibration((uint)servo) = *(calib->calibration);
         }

@@ -88,12 +88,12 @@ mp_obj_t Encoder_make_new(const mp_obj_type_t *type, size_t n_args, size_t n_kw,
     // Determine what pair of pins this encoder will use
     const mp_obj_t object = args[ARG_pins].u_obj;
     mp_obj_t *items = nullptr;
-    if(mp_obj_is_type(object, &mp_type_list)) {
+    if(mp_obj_is_exact_type(object, &mp_type_list)) {
         mp_obj_list_t *list = MP_OBJ_TO_PTR2(object, mp_obj_list_t);
         pin_count = list->len;
         items = list->items;
     }
-    else if(mp_obj_is_type(object, &mp_type_tuple)) {
+    else if(mp_obj_is_exact_type(object, &mp_type_tuple)) {
         mp_obj_tuple_t *tuple = MP_OBJ_TO_PTR2(object, mp_obj_tuple_t);
         pin_count = tuple->len;
         items = tuple->items;
